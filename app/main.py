@@ -3,10 +3,11 @@ import os
 
 def move_file(command: str) -> None:
     command_in_list = command.split()
-    if len(command_in_list) != 3 or command_in_list[0] != "mv":
+    if len(command_in_list) != 3:
         return
-    source_file = command_in_list[1]
-    destination_file = command_in_list[2]
+    linux_command, source_file, destination_file = command_in_list
+    if linux_command != "mv":
+        return
     path = command_in_list[2].split("/")
     for element_of_path in range(len(path)):
         if element_of_path == len(path) - 1 and path[element_of_path]:
@@ -18,5 +19,9 @@ def move_file(command: str) -> None:
                 return
             os.remove(source_file)
         else:
-            if not os.path.isdir("/".join(path[0:element_of_path + 1])):
-                os.mkdir("/".join(path[0:element_of_path + 1]))
+            if not (
+                    os.path.isdir(os.path.join(
+                        "/".join(path[0:element_of_path + 1]))
+                    )
+            ):
+                os.mkdir(os.path.join("/".join(path[0:element_of_path + 1])))
