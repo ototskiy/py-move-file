@@ -8,7 +8,7 @@ def move_file(command: str) -> None:
     linux_command, source_file, destination_file = command_in_list
     if linux_command != "mv":
         return
-    if destination_file[-1] == "/":
+    if destination_file[-1] == os.sep:
         destination_file += source_file
     path = command_in_list[2].split("/")
     for element_of_path in range(len(path)):
@@ -23,7 +23,9 @@ def move_file(command: str) -> None:
         else:
             if not (
                     os.path.isdir(os.path.join(
-                        "/".join(path[0:element_of_path + 1]))
+                        os.sep.join(path[0:element_of_path + 1]))
                     )
             ):
-                os.mkdir(os.path.join("/".join(path[0:element_of_path + 1])))
+                os.mkdir(os.path.join(
+                    os.sep.join(path[0:element_of_path + 1]))
+                )
